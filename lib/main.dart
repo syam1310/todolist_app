@@ -9,7 +9,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> _todos = ['task1', 'task2', 'task3'];
+  List<String> _todos = ['task1', 'task2', 'task3', "-task5"];
 
   void _addTodo(){
     showDialog(
@@ -57,12 +57,23 @@ class _MyHomePageState extends State<MyHomePage> {
           final todo = _todos[index];
 
           return ListTile(
-            title: Text(todo),
+            title: Text(
+              todo,
+              style: TextStyle(
+                decoration: todo.startsWith("-") ? TextDecoration.lineThrough : TextDecoration.none
+              ),
+              ),
             onTap: () {
               setState(() {
-                _todos.removeAt(index);
+                if(todo.startsWith("-")){
+                  _todos[index] = todo.substring(2);
+                }else{
+                  _todos[index] = "- $todo";
+                }
               });
+              
             },
+                        
           );
         }),
         floatingActionButton: FloatingActionButton(
